@@ -8,6 +8,8 @@ import Model.Login;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 //import java.sql.SQLException;
 //import java.util.logging.Level;
 //import java.util.logging.Logger;
@@ -136,42 +138,64 @@ public class Login_Interface extends javax.swing.JFrame {
 
     private void campoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoLimparActionPerformed
      
-        Login login = new Login();
-//        LoginDAO loginDAO;
-        
-//        try {
-//            loginDAO = new LoginDAO();
-//        
-        
-        login.setCrm(" ");
-        login.setSenha(" ");
-        
-//       loginDAO.delete(login);
-//       } catch (SQLException ex) {
-//            Logger.getLogger(Login_Interface.class.getName()).log(Level.SEVERE, null, ex);
-//       }
-        // TODO add your handling code here:
+        campoCrm.setText("");
+        campoSenha.setText("");
+       
     }//GEN-LAST:event_campoLimparActionPerformed
 
     private void campoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoLoginActionPerformed
 
-        try {
-            
-            Login login = new Login();
-            
-            LoginDAO loginDAO = new LoginDAO();
-        
-        
-        login.setCrm(campoCrm.getText());
-        login.setSenha(campoSenha.toString());
-        
-       loginDAO.save(login);
-       } catch (SQLException ex) {
-            Logger.getLogger(Login_Interface.class.getName()).log(Level.SEVERE, null, ex);
-       }
-        
-        
+//        try {
+//            
+//                Login login = new Login();
+//            
+//                LoginDAO loginDAO = new LoginDAO();
+//        
+//        
+//                login.setCrm(campoCrm.getText());
+//                login.setSenha(campoSenha.getName());
+//        
+//                loginDAO.save(login);
+//                
+//       } catch (SQLException ex) {
+//            Logger.getLogger(Login_Interface.class.getName()).log(Level.SEVERE, null, ex);
+//       }
+//        
+        try{
+            String crm, senha;
+
+            crm = campoCrm.getText();
+            senha = campoSenha.getText();
        
+            Login objusuarioDTO = new Login();
+            objusuarioDTO.setCrm(crm);
+            objusuarioDTO.setSenha(senha);
+            
+            LoginDAO objusuariodao = new LoginDAO();
+            ResultSet rsusuariodao = objusuariodao.autenticacaoUsuario(objusuarioDTO);
+        
+            if(rsusuariodao.next()){
+                //chamar tela q eu quero abrir
+                
+                Cadastro_Paciente objcadastro_paciente = new Cadastro_Paciente();
+                objcadastro_paciente.setVisible(true);
+                
+                dispose();
+            
+            }else{
+               //enviar menssagem de incorreto
+               
+               JOptionPane.showMessageDialog(null, "Usuario ou senha invalida");
+               
+            }
+        
+        
+        }catch (SQLException erro){
+            
+            JOptionPane.showMessageDialog(null,"ERRO LOGIN" + erro);
+                    
+        
+        }
        
     }//GEN-LAST:event_campoLoginActionPerformed
 

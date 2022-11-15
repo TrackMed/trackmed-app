@@ -37,9 +37,9 @@ public class ConnectionFactory {
 
 	public static Connection createConnection() throws SQLException{
             
-		String url = "jdbc:mysql://localhost:3306/projeto?useTimezone=true&serverTimezone=UTC"; //Nome da base de dados
-		String user = "root"; //nome do usuário do MySQL
-		String password = "123456"; //senha do MySQL
+//		String url = "jdbc:mysql://localhost:3306/projeto?useTimezone=true&serverTimezone=UTC"; //Nome da base de dados
+//		String user = "root"; //nome do usuário do MySQL
+//		String password = "123456"; //senha do MySQL
                
 		Connection conexao = null;
 		conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/projeto?useTimezone=true&serverTimezone=UTC", "root", "123456");

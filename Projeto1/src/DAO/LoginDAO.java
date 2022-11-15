@@ -9,32 +9,53 @@ import UTILS.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import java.sql.ResultSet;
 /**
  *
  * @author Victo
  */
 public class LoginDAO {
 
-    private final Connection connection;
+   Connection connection;
 
-    public LoginDAO()throws SQLException {
-        this.connection = ConnectionFactory.createConnection();
-    }
+//    public LoginDAO()throws SQLException {
+//        this.connection = ConnectionFactory.createConnection();
+//    }
+//    
+//    public void save(Login login) {
+//        try {
+//            PreparedStatement ps =  connection.prepareStatement("INSERT INTO login (crm,senha) VALUES (?,?)");
+//            ps.setString(1, login.getCrm());
+//            ps.setString(2, login.getSenha());
+//            ps.execute();
+//            JOptionPane.showMessageDialog(null, "Login efetudo com sucesso");
+//        } catch (SQLException ex) {
+//                Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, " ", ex);
+//        }
+//    }
     
-    public void save(Login login) {
-        try {
-            PreparedStatement ps =  connection.prepareStatement("INSERT INTO login (crm,senha) VALUES (?,?)");
-            ps.setString(1, login.getCrm());
-            ps.setString(2, login.getSenha());
-            ps.execute();
-            JOptionPane.showMessageDialog(null, "Login efetudo com sucesso");
-        } catch (SQLException ex) {
-                Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public ResultSet autenticacaoUsuario(Login objusuarioDTO) throws SQLException{
+       connection = new ConnectionFactory().createConnection();
+       try{
+
+            String sql = "SELECT * FROM login where crm = ? and senha = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, objusuarioDTO.getCrm());
+            ps.setString(2, objusuarioDTO.getSenha());
+
+            ResultSet rs = ps.executeQuery();
+            
+            JOptionPane.showMessageDialog(null, "Login efetuado com sucesso!");
+
+            return rs;
+ 
+       } catch (SQLException erro){
+           JOptionPane.showMessageDialog(null, "LoginDAO: " + erro);
+           return null;
+       }
+       
     }
 
 //    public void delete(Login login) {

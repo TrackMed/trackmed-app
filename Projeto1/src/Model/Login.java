@@ -1,6 +1,6 @@
 package Model;
 
-import javax.swing.JPasswordField;
+
 
 
 public class Login {
@@ -17,22 +17,16 @@ public class Login {
     this.senha = senha;
     
     }
-    
 
     public Login() {
-         }
-
+   }
+    
     public int getID() {
         return ID;
     }
 
     public void setID(int ID) {
         this.ID = ID;
-    }
-
-    public Login(String crm, String senha) {
-        this.crm = crm;
-        this.senha = senha;
     }
 
     public String getCrm() {

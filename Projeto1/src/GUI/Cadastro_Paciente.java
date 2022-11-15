@@ -133,7 +133,7 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
 
         jLabel11.setText("Comorbidade");
 
-        campoDeletar.setText("Deletar");
+        campoDeletar.setText("Limpar");
         campoDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoDeletarActionPerformed(evt);
@@ -149,14 +149,7 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
 
         tabelaPesquisar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nome", "CPF", "Idade", "Endereço", "Telefone", "Comorbidade"
@@ -313,6 +306,8 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
             
             cadastroDAO.save(cadastros);
             
+            dispose();
+            
         } catch (SQLException ex) {
             Logger.getLogger(Cadastro_Paciente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -321,15 +316,14 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
 
     private void campoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDeletarActionPerformed
         
-            
-            CadastroPaciente cadastros = new CadastroPaciente();
+        campoNome.setText("");
+        campoCPF.setText("");
+        campoIdade.setText("");
+        campoEndereco.setText("");
+        campoTelefone.setText("");
+        campoTipo.setText("");
        
-            cadastros.setNome(" ");
-            cadastros.setCpf(" ");
-            cadastros.setIdade(" ");
-            cadastros.setEndereco(" ");
-            cadastros.setTelefone(" ");
-            cadastros.setComorbidade(" ");
+            
     }//GEN-LAST:event_campoDeletarActionPerformed
 
     private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed

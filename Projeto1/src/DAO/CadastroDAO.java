@@ -18,7 +18,7 @@ import java.util.List;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
+
 
 /**
  *
@@ -27,7 +27,6 @@ import javax.swing.JTable;
 public class CadastroDAO {
 
     private final Connection connection;
-    public JTable getAll;
 
     public CadastroDAO() throws SQLException {
         this.connection = ConnectionFactory.createConnection();
@@ -44,6 +43,9 @@ public class CadastroDAO {
             ps.setString(6, cadastros.getComorbidade());
             ps.execute();
             JOptionPane.showMessageDialog(null, "Paciente cadastrado com sucesso!");
+            
+            
+            
         }  catch (SQLException ex) {
            Logger.getLogger(CadastroDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,23 +75,26 @@ public class CadastroDAO {
 
 //    public void delete(CadastroPaciente cadastros) {
 //        
-//       CadastroPaciente adastros = new CadastroPaciente();
+//        
+//        
+//       CadastroPaciente cadastro = new CadastroPaciente();
 //       
-//            cadastros.setNome(" ");
-//            cadastros.setCpf(" ");
-//            cadastros.setIdade(" ");
-//            cadastros.setEndereco(" ");
-//            cadastros.setTelefone(" ");
-//            cadastros.setComorbidade(" ");
+//            cadastro.setNome(" ");
+//            cadastro.setCpf(" ");
+//            cadastro.setIdade(" ");
+//            cadastro.setEndereco(" ");
+//            cadastro.setTelefone(" ");
+//            cadastro.setComorbidade(" ");
 //        
 //        try {
 //            PreparedStatement ps = connection.prepareStatement("DELETE FROM cadastroo WHERE id=?");
-//            ps.setInt(1, cadastros.getID());
+//            ps.setInt(1, cadastro.getID());
 //            ps.execute();
 //            JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso!");
 //        } catch (SQLException ex) {
 //            Logger.getLogger(CadastroDAO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
+//    }
     
 
     public List<CadastroPaciente> getAll() {
@@ -148,5 +153,4 @@ public class CadastroDAO {
 //        }
 //    }
 
-    
 }
