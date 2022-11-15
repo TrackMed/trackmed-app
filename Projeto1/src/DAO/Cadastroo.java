@@ -8,11 +8,12 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
 
 /**
  *
@@ -25,23 +26,27 @@ import javax.persistence.Table;
     @NamedQuery(name = "Cadastroo.findById", query = "SELECT c FROM Cadastroo c WHERE c.id = :id"),
     @NamedQuery(name = "Cadastroo.findByNome", query = "SELECT c FROM Cadastroo c WHERE c.nome = :nome"),
     @NamedQuery(name = "Cadastroo.findByCpf", query = "SELECT c FROM Cadastroo c WHERE c.cpf = :cpf"),
+    @NamedQuery(name = "Cadastroo.findByIdade", query = "SELECT c FROM Cadastroo c WHERE c.idade = :idade"),
     @NamedQuery(name = "Cadastroo.findByEndereco", query = "SELECT c FROM Cadastroo c WHERE c.endereco = :endereco"),
     @NamedQuery(name = "Cadastroo.findByTelefone", query = "SELECT c FROM Cadastroo c WHERE c.telefone = :telefone"),
-    @NamedQuery(name = "Cadastroo.findByIdade", query = "SELECT c FROM Cadastroo c WHERE c.idade = :idade"),
     @NamedQuery(name = "Cadastroo.findByComorbidade", query = "SELECT c FROM Cadastroo c WHERE c.comorbidade = :comorbidade")})
 public class Cadastroo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Basic(optional = false)
     @Column(name = "nome")
     private String nome;
-    @Id
     @Basic(optional = false)
     @Column(name = "cpf")
     private String cpf;
+    @Basic(optional = false)
+    @Column(name = "idade")
+    private String idade;
     @Basic(optional = false)
     @Column(name = "endereco")
     private String endereco;
@@ -49,34 +54,31 @@ public class Cadastroo implements Serializable {
     @Column(name = "telefone")
     private String telefone;
     @Basic(optional = false)
-    @Column(name = "idade")
-    private String idade;
-    @Basic(optional = false)
     @Column(name = "comorbidade")
     private String comorbidade;
 
     public Cadastroo() {
     }
 
-    public Cadastroo(String cpf) {
-        this.cpf = cpf;
+    public Cadastroo(Integer id) {
+        this.id = id;
     }
 
-    public Cadastroo(String cpf, String id, String nome, String endereco, String telefone, String idade, String comorbidade) {
-        this.cpf = cpf;
+    public Cadastroo(Integer id, String nome, String cpf, String idade, String endereco, String telefone, String comorbidade) {
         this.id = id;
         this.nome = nome;
+        this.cpf = cpf;
+        this.idade = idade;
         this.endereco = endereco;
         this.telefone = telefone;
-        this.idade = idade;
         this.comorbidade = comorbidade;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -96,6 +98,14 @@ public class Cadastroo implements Serializable {
         this.cpf = cpf;
     }
 
+    public String getIdade() {
+        return idade;
+    }
+
+    public void setIdade(String idade) {
+        this.idade = idade;
+    }
+
     public String getEndereco() {
         return endereco;
     }
@@ -112,14 +122,6 @@ public class Cadastroo implements Serializable {
         this.telefone = telefone;
     }
 
-    public String getIdade() {
-        return idade;
-    }
-
-    public void setIdade(String idade) {
-        this.idade = idade;
-    }
-
     public String getComorbidade() {
         return comorbidade;
     }
@@ -131,7 +133,7 @@ public class Cadastroo implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cpf != null ? cpf.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -142,7 +144,7 @@ public class Cadastroo implements Serializable {
             return false;
         }
         Cadastroo other = (Cadastroo) object;
-        if ((this.cpf == null && other.cpf != null) || (this.cpf != null && !this.cpf.equals(other.cpf))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -150,7 +152,7 @@ public class Cadastroo implements Serializable {
 
     @Override
     public String toString() {
-        return "DAO.Cadastroo[ cpf=" + cpf + " ]";
+        return "DAO.Cadastroo[ id=" + id + " ]";
     }
     
 }

@@ -7,6 +7,11 @@ package GUI;
 
 import DAO.CadastroDAO;
 import Model.CadastroPaciente;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -65,10 +70,9 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         campoDeletar = new javax.swing.JButton();
         campoGravar = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
-        campoPesquisar = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaPesquisar = new javax.swing.JTable();
+        botaoPesquisar = new javax.swing.JButton();
 
         jTextField7.setText("jTextField7");
 
@@ -99,45 +103,35 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
         popupMenu1.setLabel("popupMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         campoNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoNomeActionPerformed(evt);
             }
         });
-        getContentPane().add(campoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 61, 330, -1));
-        getContentPane().add(campoCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 101, 330, -1));
-        getContentPane().add(campoIdade, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 141, 330, -1));
-        getContentPane().add(campoEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 181, 330, -1));
-        getContentPane().add(campoTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 221, 330, -1));
-        getContentPane().add(campoTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 330, -1));
+
+        campoTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoTelefoneActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("CADASTRO PACIENTE");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 231, 22));
 
         jLabel3.setText("Nome:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 64, 37, -1));
 
         jLabel4.setText("CPF:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 104, 37, -1));
 
         jLabel5.setText("Preencha os dados abaixo para cadastro do paciente:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
 
         jLabel6.setText("Idade:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 144, 37, -1));
 
         jLabel7.setText("Endereço:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 184, 112, -1));
 
         jLabel8.setText("Telefone:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 224, 112, -1));
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 310, 335, -1));
 
         jLabel11.setText("Comorbidade");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 260, 80, -1));
 
         campoDeletar.setText("Deletar");
         campoDeletar.addActionListener(new java.awt.event.ActionListener() {
@@ -145,7 +139,6 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
                 campoDeletarActionPerformed(evt);
             }
         });
-        getContentPane().add(campoDeletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 300, 80, -1));
 
         campoGravar.setText("Gravar");
         campoGravar.addActionListener(new java.awt.event.ActionListener() {
@@ -153,19 +146,8 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
                 campoGravarActionPerformed(evt);
             }
         });
-        getContentPane().add(campoGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 300, 80, -1));
 
-        jLabel12.setText("Pesquisar");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 50, -1));
-
-        campoPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoPesquisarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(campoPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 300, 140, -1));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaPesquisar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -188,9 +170,123 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tabelaPesquisar);
+        tabelaPesquisar.getAccessibleContext().setAccessibleParent(tabelaPesquisar);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 470, 150));
+        botaoPesquisar.setText("Pesquisar");
+        botaoPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoPesquisarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(campoTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                    .addComponent(campoTipo))
+                .addGap(15, 15, 15))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(210, 210, 210)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(campoDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(campoGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(106, 106, 106)
+                                .addComponent(botaoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(campoIdade, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                            .addComponent(campoEndereco, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(campoCPF)
+                            .addComponent(campoNome))))
+                .addGap(1, 1, 1))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(jLabel5)
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel3))
+                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel4))
+                    .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel6))
+                    .addComponent(campoIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel7))
+                    .addComponent(campoEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel8))
+                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(campoDeletar)
+                    .addComponent(campoGravar)
+                    .addComponent(botaoPesquisar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel9)))
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -199,43 +295,63 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoNomeActionPerformed
 
-    private void campoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoPesquisarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoPesquisarActionPerformed
-
     private void campoGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoGravarActionPerformed
-        // TODO add your handling code here:
-        CadastroPaciente cadastros = new CadastroPaciente();
-        
-         CadastroDAO cadastroDAO = new CadastroDAO();
-        
-        cadastros.setNome(campoNome.getText());
-        cadastros.setCpf(campoCPF.getText());
-        cadastros.setIdade(campoIdade.getText());
-        cadastros.setEndereco(campoEndereco.getText());
-        cadastros.setTelefone(campoTelefone.getText());
-        cadastros.setComorbidade(campoTipo.getText());
-        
-        
-        cadastroDAO.save(cadastros);
+        try {
+            // TODO add your handling code here:
+            CadastroPaciente cadastros = new CadastroPaciente();
+            
+            CadastroDAO cadastroDAO = new CadastroDAO();
+            
+            
+            cadastros.setNome(campoNome.getText());
+            cadastros.setCpf(campoCPF.getText());
+            cadastros.setIdade(campoIdade.getText());
+            cadastros.setEndereco(campoEndereco.getText());
+            cadastros.setTelefone(campoTelefone.getText());
+            cadastros.setComorbidade(campoTipo.getText());
+            
+            
+            cadastroDAO.save(cadastros);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Cadastro_Paciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_campoGravarActionPerformed
 
     private void campoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDeletarActionPerformed
-        // TODO add your handling code here:
-        CadastroPaciente cadastros = new CadastroPaciente();
         
-        CadastroDAO cadastroDAO = new CadastroDAO();
-        
-        cadastros.setNome(" ");
-        cadastros.setCpf(" ");
-        cadastros.setIdade(" ");
-        cadastros.setEndereco(" ");
-        cadastros.setTelefone(" ");
-        cadastros.setComorbidade(" ");
-        
-        cadastroDAO.delete(cadastros);
+            
+            CadastroPaciente cadastros = new CadastroPaciente();
+       
+            cadastros.setNome(" ");
+            cadastros.setCpf(" ");
+            cadastros.setIdade(" ");
+            cadastros.setEndereco(" ");
+            cadastros.setTelefone(" ");
+            cadastros.setComorbidade(" ");
     }//GEN-LAST:event_campoDeletarActionPerformed
+
+    private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
+        
+   
+        try {
+            
+            Cadastro_Paciente p = new Cadastro_Paciente();
+           CadastroDAO C = new CadastroDAO();
+            
+            JOptionPane.showInputDialog("Qual o cpf?");
+            
+           C.getAll();
+        } catch (SQLException ex) {
+            Logger.getLogger(Cadastro_Paciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_botaoPesquisarActionPerformed
+
+    private void campoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTelefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoTelefoneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,6 +389,7 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoPesquisar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
@@ -282,13 +399,11 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
     private javax.swing.JButton campoGravar;
     private javax.swing.JTextField campoIdade;
     private javax.swing.JTextField campoNome;
-    private javax.swing.JTextField campoPesquisar;
     private javax.swing.JTextField campoTelefone;
     private javax.swing.JTextField campoTipo;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -299,7 +414,6 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField7;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
@@ -311,5 +425,14 @@ public class Cadastro_Paciente extends javax.swing.JFrame {
     private java.awt.MenuBar menuBar2;
     private java.awt.MenuBar menuBar3;
     private java.awt.PopupMenu popupMenu1;
+    private javax.swing.JTable tabelaPesquisar;
     // End of variables declaration//GEN-END:variables
+
+   
+   
+
+    private void tabelaPesquisar(List<CadastroPaciente> getAll) {
+   }
+
+   
 }

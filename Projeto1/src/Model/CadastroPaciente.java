@@ -5,30 +5,28 @@ package Model;
 public class CadastroPaciente {
     
     
+    private int ID;
     private String nome;
     private String cpf;
     private String idade;
     private String endereco;
     private String telefone;
     private String Comorbidade;
-    private int ID;
+    
 
-    public CadastroPaciente (String nome, String cpf, String idade, String endereco, String telefone, String Comorbidade, int ID) {
+    public CadastroPaciente ( int ID, String nome, String cpf, String idade, String endereco, String telefone, String Comorbidade) {
+         this.ID = ID;
         this.nome = nome;
         this.cpf = cpf;
         this.idade = idade;
         this.endereco = endereco;
         this.telefone = telefone;
         this.Comorbidade = Comorbidade;
-        this.ID = ID;
+       
     }
 
     public CadastroPaciente() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    
-
+       }
 
     public int getID() {
         return ID;
@@ -85,5 +83,6 @@ public class CadastroPaciente {
     public void setComorbidade(String Comorbidade) {
         this.Comorbidade = Comorbidade;
     }
+
     
 }

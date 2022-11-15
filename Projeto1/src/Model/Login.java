@@ -1,12 +1,34 @@
 package Model;
 
+import javax.swing.JPasswordField;
+
 
 public class Login {
     
     
-    
-private String crm;
+    private int ID;
+    private String crm;
     private String senha;
+    
+    public Login(int ID, String crm, String senha){
+    
+    this.ID = ID;
+    this.crm = crm;
+    this.senha = senha;
+    
+    }
+    
+
+    public Login() {
+         }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public Login(String crm, String senha) {
         this.crm = crm;
@@ -28,13 +50,5 @@ private String crm;
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
-    public class cadastrarMedico{
-        
-    }
-    
-    public class logarMedico {
-        
-    }
-         
+  
 }
